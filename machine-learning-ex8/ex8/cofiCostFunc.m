@@ -41,16 +41,21 @@ Theta_grad = zeros(size(Theta));
 %
 
 
+sigma=0;
+for i=1:num_movies
+    for j=1:num_users
+        if(R(i,j)==1)
+            sigma+= ( ( X(i,:)*Theta(j,:)' - Y(i,j))^2 );
+        endif
+    end
+end
+J=1/2*sigma+ lambda/2*( sum( sum(Theta.^2))+ sum(sum(X.^2)));
 
+%'
 
-
-
-
-
-
-
-
-
+Cost_matrix= (X*Theta' - Y).*R;
+X_grad= Cost_matrix*Theta + lambda*X;
+Theta_grad= Cost_matrix'*X + lambda*Theta;
 
 
 
